@@ -1,103 +1,126 @@
-import Image from "next/image";
+"use client";
+
+import { motion } from "framer-motion";
+import Link from "next/link";
+import { ChatBubbleIcon, RocketIcon, GearIcon } from "@radix-ui/react-icons";
+import { JSX } from "react";
 
 export default function Home() {
-  return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm/6 text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-[family-name:var(--font-geist-mono)] font-semibold">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+	return (
+		<main className="flex min-h-screen flex-col items-center justify-center bg-[#0D1117] text-white px-6">
+			{/* Background Gradient Animation */}
+			<motion.div
+				className="absolute inset-0 bg-gradient-to-br from-blue-500/20 to-purple-500/20 blur-[200px]"
+				animate={{ opacity: [0.3, 0.5, 0.3] }}
+				transition={{
+					duration: 5,
+					repeat: Infinity,
+					ease: "easeInOut",
+				}}
+			/>
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
-        </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
+			{/* Hero Section */}
+			<section className="text-center mt-20">
+				<motion.h1
+					className="text-5xl md:text-7xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-500"
+					initial={{ opacity: 0, y: -20 }}
+					animate={{ opacity: 1, y: 0 }}
+					transition={{ duration: 1 }}
+				>
+					Influencer GPT
+				</motion.h1>
+				<motion.p
+					className="mt-4 text-lg md:text-xl text-gray-300 max-w-2xl mx-auto"
+					initial={{ opacity: 0, y: 10 }}
+					animate={{ opacity: 1, y: 0 }}
+					transition={{ duration: 1, delay: 0.5 }}
+				>
+					Elevate your influence with AI-driven insights, automation,
+					and content creation.
+				</motion.p>
+
+				{/* Mockup Image (Replace with actual UI preview)
+        <motion.div
+          className="mt-10 border border-gray-700 rounded-xl overflow-hidden w-full max-w-3xl bg-[#161B22] shadow-lg"
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 1, delay: 0.8 }}
         >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
+          <img
+            src="/mockup.png"
+            alt="App Preview"
+            className="w-full object-cover"
           />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
-  );
+        </motion.div> */}
+
+				{/* Call to Action */}
+				<motion.div
+					className="mt-4"
+					initial={{ opacity: 0, y: 10 }}
+					animate={{ opacity: 1, y: 0 }}
+					transition={{ duration: 1, delay: 0.6 }}
+				>
+					<div className="relative z-10">
+						<Link
+							href="/dashboard"
+							className="px-6 py-2 text-lg font-semibold bg-gradient-to-r from-blue-500 to-purple-500 rounded-lg hover:opacity-80 transition inline-block cursor-pointer text-white"
+						>
+							Get Started
+						</Link>
+					</div>
+				</motion.div>
+			</section>
+
+			{/* Feature Section */}
+			<section className="mt-36 grid md:grid-cols-3 gap-8 max-w-5xl text-center">
+				<FeatureCard
+					icon={
+						<ChatBubbleIcon className="w-10 h-10 text-blue-400" />
+					}
+					title="Smart AI Conversations"
+					description="Engage with an intelligent AI designed to help influencers craft their brand voice."
+				/>
+				<FeatureCard
+					icon={<RocketIcon className="w-10 h-10 text-purple-400" />}
+					title="Automated Content Creation"
+					description="Generate captions, blog posts, and even video scripts instantly."
+				/>
+				<FeatureCard
+					icon={<GearIcon className="w-10 h-10 text-green-400" />}
+					title="Customizable AI"
+					description="Fine-tune your AI to match your personality and content style."
+				/>
+			</section>
+
+			{/* Footer */}
+			<footer className="mt-20 text-gray-400 text-center py-6 border-t border-gray-700 w-full">
+				© {new Date().getFullYear()} Influencer GPT. All rights
+				reserved.
+			</footer>
+		</main>
+	);
+}
+
+// Feature Card Component
+function FeatureCard({
+	icon,
+	title,
+	description,
+}: {
+	icon: JSX.Element;
+	title: string;
+	description: string;
+}) {
+	return (
+		<motion.div
+			className="p-6 bg-[#161B22] rounded-lg shadow-lg hover:shadow-xl transition"
+			initial={{ opacity: 0, y: 10 }}
+			animate={{ opacity: 1, y: 0 }}
+			transition={{ duration: 0.5 }}
+		>
+			<div className="mb-3 flex justify-center">{icon}</div>
+			<h3 className="text-xl font-semibold">{title}</h3>
+			<p className="text-gray-300 mt-2">{description}</p>
+		</motion.div>
+	);
 }
