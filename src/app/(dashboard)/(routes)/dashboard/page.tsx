@@ -61,21 +61,21 @@ const DashboardPage = () => {
 	const [loading, setLoading] = useState(true);
 	const [user, setUser] = useState<User | null>(null);
 
-//   useEffect(() => {
-//     const checkUser = async () => {
-//       const { data: session } = await supabase.auth.getSession();
-//       if (!session?.session) {
-//         router.push("/sign-in"); // Redirect to login if not authenticated
-//       } else {
-//         setUser(session.session.user);
-//       }
-//       setLoading(false);
-//     };
+  useEffect(() => {
+    const checkUser = async () => {
+      const { data: session } = await supabase.auth.getSession();
+      if (!session?.session) {
+        router.push("/sign-in"); // Redirect to login if not authenticated
+      } else {
+        setUser(session.session.user);
+      }
+      setLoading(false);
+    };
 
-//     checkUser();
-//   }, [router]);
+    checkUser();
+  }, [router]);
 
-//   if (loading) return <p className="text-center text-white">Loading...</p>;
+  if (loading) return <p className="text-center text-white">Loading...</p>;
 	return (
 		<div className="bg-gray-900 mt-[60px] min-h-screen p-8">
 			<div className="mb-8 space-y-4 ">
