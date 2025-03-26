@@ -62,7 +62,7 @@ const Sidebar: FC<SidebarProps> = ({ apiLimitCount = 0, isPro = false }) => {
   const pathname = usePathname();
     const handleLogout = async () => {
       await supabase.auth.signOut();
-      // window.location.href = "/";
+      window.location.href = "/";
     };
   return (
     <div className="space-y-4 py-4 flex mt-[60px] flex-col h-full bg-[#111827] text-white">
