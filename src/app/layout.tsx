@@ -15,7 +15,7 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "AI Influencer",
-  description: "AI Influencer is a tool that helps you generate content for your social media accounts.",
+  description: "AI Influencer is an amazing tool that helps you generate content for your social media accounts.",
 };
 
 export default function RootLayout({
