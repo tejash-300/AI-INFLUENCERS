@@ -7,10 +7,9 @@ import Link from "next/link";
 // Navbar links configuration
 const NAV_LINKS = {
   Home: "/",
+  Dashboard: "/dashboard",
   Features: "/#features",
   Testimonials: "/#testimonials",
-  About: "/about",
-  Contact: "/contact",
 };
 
 export default function Navbar() {
