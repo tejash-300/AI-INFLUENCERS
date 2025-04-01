@@ -52,7 +52,7 @@ export default function VideoScriptPage() {
         />
         <Button 
           onClick={generateScript} 
-          className="mt-4 w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 rounded-lg transition duration-300"
+          className="mt-4 w-full bg-blue-600 cursor-pointer hover:bg-blue-700 text-white font-semibold py-2 rounded-lg transition duration-300"
           disabled={loading}
         >
           {loading ? <Loader2 className="animate-spin w-5 h-5 mx-auto" /> : "Generate Script"}

@@ -90,7 +90,7 @@ export default function VideoGenerator() {
         </select> */}
 
         <button
-          className="mt-6 w-full py-2 bg-blue-600 hover:bg-blue-700 transition rounded-lg font-bold"
+          className="mt-6 w-full py-2 bg-blue-600 cursor-pointer hover:bg-blue-700 transition rounded-lg font-bold"
           onClick={handleGenerateVideo}
           disabled={loading}
         >
