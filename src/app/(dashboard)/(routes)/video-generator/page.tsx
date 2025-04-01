@@ -14,26 +14,48 @@ export default function VideoGenerator() {
       alert("Please enter a script and source URL.");
       return;
     }
-
+  
     setLoading(true);
     try {
-      const response = await fetch("/api/generate-video", {
+      // 🔹 Step 1: Start video generation (returns talkId)
+      const startResponse = await fetch("/api/d-id/start", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ script, sourceUrl, engine }),
+        body: JSON.stringify({ script, sourceUrl }),
       });
-
-      const data = await response.json();
-      if (data.videoUrl) {
-        setVideoUrl(data.videoUrl);
-      } else {
-        alert("Failed to generate video.");
+  
+      if (!startResponse.ok) throw new Error("Failed to start video generation.");
+      const startData = await startResponse.json();
+      const talkId = startData?.talkId;
+      if (!talkId) throw new Error("Talk ID not received.");
+  
+      // 🔄 Step 2: Poll for status
+      let outputVideo = "";
+      let attempts = 0;
+      while (true) {
+        attempts++;
+        console.log(`Checking status... Attempt ${attempts}`);
+        await new Promise((resolve) => setTimeout(resolve, 30000)); // Wait 30 sec
+        const statusResponse = await fetch(`/api/d-id/status?talkId=${talkId}`);
+  
+        if (!statusResponse.ok) throw new Error("Failed to check video status.");
+        const statusData = await statusResponse.json();
+  
+        if (statusData.status === "COMPLETED") {
+          outputVideo = statusData.videoUrl;
+          break;
+        } else if (statusData.status === "FAILED") {
+          throw new Error("Video processing failed.");
+        }
       }
+  
+      setVideoUrl(outputVideo);
     } catch (error) {
-      console.error("Video Generation Error:", error);
-      alert("An error occurred.");
+      console.error("❌ Video Generation Error:", error);
+      alert("An error occurred while generating the video.");
+    } finally {
+      setLoading(false);
     }
-    setLoading(false);
   };
 
   return (
