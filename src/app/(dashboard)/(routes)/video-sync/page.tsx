@@ -49,47 +49,69 @@ export default function LipSyncForm() {
 	};
 
 	const handleSubmit = async () => {
-		if (!video || !script) {
-			return alert("Upload a video and enter a script.");
-		}
-
-		setError("");
-		setLoading(true);
-		setUploading(true);
-
-		try {
-			// 🔹 Upload video to S3
-			const formData = new FormData();
-			formData.append("file", video);
-			const uploadRes = await fetch("/api/upload", {
-				method: "POST",
-				body: formData,
-			});
-
-			if (!uploadRes.ok) throw new Error("Video upload failed.");
-			const uploadData = await uploadRes.json();
-			const videoUrl = uploadData.url;
-			setUploading(false);
-
-			// 🔹 Call API to generate lip-synced video
-			const res = await fetch("/api/lipsync", {
-				method: "POST",
-				headers: { "Content-Type": "application/json" },
-				body: JSON.stringify({ videoUrl, script }),
-			});
-
-			if (!res.ok) throw new Error("Lip-sync generation failed.");
-			const data = await res.json();
-			setOutputVideo(data?.videoUrl || "");
-		} catch (err) {
-			setError(
-				err instanceof Error ? err.message : "Something went wrong."
-			);
-		} finally {
-			setLoading(false);
-			setUploading(false);
-		}
-	};
+        if (!video || !script) {
+            return alert("Upload a video and enter a script.");
+        }
+    
+        setError("");
+        setLoading(true);
+        setUploading(true);
+    
+        try {
+            // 🔹 Upload video to S3
+            const formData = new FormData();
+            formData.append("file", video);
+            const uploadRes = await fetch("/api/upload", {
+                method: "POST",
+                body: formData,
+            });
+    
+            if (!uploadRes.ok) throw new Error("Video upload failed.");
+            const uploadData = await uploadRes.json();
+            const videoUrl = uploadData.url;
+            setUploading(false);
+    
+            // 🔹 Start lip-sync job and get jobId
+            const res = await fetch("/api/lipsync/start", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ videoUrl, script }),
+            });
+    
+            if (!res.ok) throw new Error("Lip-sync job start failed.");
+            const data = await res.json();
+            const jobId = data?.jobId;
+            if (!jobId) throw new Error("Failed to retrieve job ID.");
+    
+            // 🔄 Polling for job status
+            let outputVideo = "";
+            let attempts = 0;
+            while (true) {
+                attempts++;
+                console.log(`Checking status... Attempt ${attempts}`);
+                await new Promise((resolve) => setTimeout(resolve, 30000)); // Wait 30 seconds
+                const statusRes = await fetch(`/api/lipsync/status?jobId=${jobId}`);
+                if (!statusRes.ok) throw new Error("Failed to check job status.");
+    
+                const statusData = await statusRes.json();
+                if (statusData.status === "COMPLETED") {
+                    outputVideo = statusData.videoUrl;
+                    break;
+                } else if (statusData.status === "FAILED") {
+                    throw new Error("Lip-sync processing failed.");
+                }
+            }
+    
+            setOutputVideo(outputVideo);
+        } catch (err) {
+            setError(
+                err instanceof Error ? err.message : "Something went wrong."
+            );
+        } finally {
+            setLoading(false);
+            setUploading(false);
+        }
+    };
 
 	return (
 		<div className="bg-gray-900 text-white min-h-screen flex flex-col items-center justify-center p-6">
