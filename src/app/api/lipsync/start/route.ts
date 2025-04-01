@@ -1,5 +1,24 @@
 import { NextRequest, NextResponse } from "next/server";
 import AWS from "aws-sdk";
+import { GoogleAuth } from "google-auth-library";
+
+
+async function getAccessToken() {
+    const auth = new GoogleAuth({
+        credentials: {
+            type: "service_account",
+            project_id: "fabsa-446719",
+            private_key: process.env.GOOGLE_PRIVATE_KEY?.replace(/\\n/g, "\n"),
+            client_email: process.env.GOOGLE_CLIENT_EMAIL,
+        },
+        scopes: ["https://www.googleapis.com/auth/cloud-platform"],
+    });
+
+    const client = await auth.getClient();
+    const accessToken = await client.getAccessToken();
+    console.log("Access Token:", accessToken);
+    return accessToken;
+}
 
 async function generateSpeech(script: string) {
   try {
