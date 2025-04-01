@@ -38,7 +38,7 @@ export default function VideoGenerator() {
 
   return (
     <div className="min-h-screen bg-gray-900 mt-[60px] py-8 text-white flex flex-col items-center p-6">
-      <h1 className="text-3xl font-bold mb-6">🎬 AI Video Generator</h1>
+      <h1 className="text-3xl font-bold mb-6">🎬 Image to Video Generator</h1>
 
       <div className="w-full max-w-2xl bg-gray-800 p-6 rounded-lg shadow-md">
         <label className="block mb-2 text-gray-400">🎤 Enter Script:</label>

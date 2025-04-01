@@ -41,11 +41,18 @@ const tools = [
 		href: "/video-script",
 	},
 	{
-		label: "Video Generator",
+		label: "Image to Video Generator",
 		icon: FcFilmReel,
 		color: "text-blue-500",
 		bgColor: "bg-blue-500/10",
 		href: "/video-generator",
+	},
+	{
+		label: "Video to Video Generator",
+		icon: Video,
+		color: "text-green-500",
+		bgColor: "bg-green-500/10",
+		href: "/video-sync",
 	},
 	{
 		label: "Virtual Influencer",

@@ -40,10 +40,16 @@ const routes = [
     color: "text-red-500",
   },
   {
-    label: "Video Generator",
+    label: "Image to Video Generator",
     icon: FcFilmReel,
     href: "/video-generator",
     color: "text-red-500",
+  },
+  {
+    label: "Video to Video Generator",
+    icon: VideoIcon,
+    href: "/video-sync",
+    color: "text-green-500",
   },
   {
     label: "Virtual Influencer",
