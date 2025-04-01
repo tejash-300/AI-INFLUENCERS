@@ -30,7 +30,7 @@ async function generateSpeech(script: string) {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        "Authorization": `Bearer ${process.env.GCLOUD_ACCESS_TOKEN}`,
+        "Authorization": `Bearer ${(await getAccessToken()).token}`,
         "X-Goog-User-Project": "fabsa-446719",
       },
       body: JSON.stringify({
