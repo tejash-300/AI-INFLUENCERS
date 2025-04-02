@@ -68,7 +68,7 @@ async function checkWav2LipStatus(jobId: string, apiKey: string) {
   const options = { method: "GET", headers: { "x-api-key": apiKey } };
 
   let attempts = 0;
-  const maxAttempts = 100; // Check status up to 30 times (adjust as needed)
+  const maxAttempts = 100; // Check status up to 30 times
   const delay = 5000; // 5 seconds delay between checks
 
   while (attempts < maxAttempts) {
@@ -123,7 +123,16 @@ export async function POST(req: NextRequest) {
         options: {
           output_format: "mp4",
           fps: 25,
-          output_resolution: [1280, 720],
+          output_resolution: [1280, 720, 640, 480],
+          output_bitrate: 2000,
+          output_codec: "h264",
+          output_audio_codec: "aac",
+          output_audio_bitrate: 128,
+          output_audio_sample_rate: 44100,
+          output_audio_channels: 2,
+          output_audio_volume: 1.0,
+          output_audio_normalization: true,
+          output_audio_normalization_target_level: -16,
           active_speaker: true,
         },
       }),

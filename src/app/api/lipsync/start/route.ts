@@ -76,14 +76,15 @@ async function generateSpeech(script: string) {
 
 export async function POST(req: NextRequest) {
   try {
-    const { videoUrl, script } = await req.json();
+    const data = await req.json();
+    console.log("Received data:", data);
+    const { videoUrl, script, generatedAudioUrl } = data;
     if (!videoUrl || !script) {
       return NextResponse.json({ error: "Missing video URL or script" }, { status: 400 });
     }
 
     console.log("✅ Generating speech...");
-    const audioUrl = await generateSpeech(script);
-    console.log("🎙️ Speech generated:", audioUrl);
+    console.log("🎙️ Speech generated:", generatedAudioUrl);
 
     console.log("🎥 Calling Wav2Lip API...");
     const response = await fetch("https://api.sync.so/v2/generate", {
@@ -96,7 +97,7 @@ export async function POST(req: NextRequest) {
         model: "lipsync-1.7.1",
         input: [
           { type: "video", url: videoUrl },
-          { type: "audio", url: audioUrl },
+          { type: "audio", url: generatedAudioUrl },
         ],
         options: {
           output_format: "mp4",
