@@ -91,34 +91,31 @@ export default function LipSyncForm() {
 		console.log("Script:", script);
 		console.log("Audio URL:", audioUrl);
 		const url = audioUrl
-		const awsUrl = "https://jbvnj8m6h5.execute-api.eu-north-1.amazonaws.com/generate-speech";
+		const awsUrl = "https://voicecloning.duckdns.org/generate-speech";
 		console.log("AWS URL:", awsUrl);
 		try {
-				const response = await fetch(awsUrl, {
+				const response = await fetch("https://voicecloning.duckdns.org/generate-speech", {
 					method: "POST",
 					headers: { "Content-Type": "application/json" },
 					body: JSON.stringify({
 						"script": script,
-						"audioUrl": url,
+						"audioUrl": audioUrl,
 					  }),
-				}).then((res) => {console.log("Response:", res); return res;}).catch((err) => {
-					console.error("Error:", err);
-					throw new Error("Failed to fetch audio URL.");
 				});
 				console.log("Response:", response);
 				// if (!response.ok) {
 				// 	throw new Error(`HTTP error! Status: ${response.status}`);
 				// }
-		
+
 				const data = await response.json();
 				console.log("Response:", data);
 
-				const audioUrl = data?.outputAudioUrl;
-				console.log("Audio URL:", audioUrl);
-				if (!audioUrl) {
+				const outputAudioUrl = data?.outputAudioUrl;
+				console.log("Audio URL:", outputAudioUrl);
+				if (!outputAudioUrl) {
 					throw new Error("Failed to retrieve audio URL.");
 				}
-				return audioUrl;
+				return outputAudioUrl;
 			} catch (error) {
 				console.error("Error fetching data:", error);
 			}
