@@ -92,13 +92,16 @@ export default function LipSyncForm() {
 		console.log("Audio URL:", audioUrl);
 		const url = audioUrl
 		try {
-				const response = await fetch("http://51.20.84.125:8000/generate-speech", {
+				const response = await fetch("https://jbvnj8m6h5.execute-api.eu-north-1.amazonaws.com/generate-speech", {
 					method: "POST",
 					headers: { "Content-Type": "application/json" },
 					body: JSON.stringify({
 						"script": script,
 						"audioUrl": url,
 					  }),
+				}).then((res) => {console.log("Response:", res); return res;}).catch((err) => {
+					console.error("Error:", err);
+					throw new Error("Failed to fetch audio URL.");
 				});
 				console.log("Response:", response);
 				// if (!response.ok) {
